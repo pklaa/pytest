@@ -30,10 +30,9 @@ jobs:
       run: docker build -t ${IMAGE_URL}:${GITHUB_SHA} .
 
     - name: Log in to Docker Hub
-      run: docker login -u ${{ secrets.CLOUD_ACCOUNT_ID }} -p '${{ secrets.REGISTRY_PASSWORD }}' ${IMAGE_URL}
-
-    - name: Push Docker image
-      run: docker push ${IMAGE_URL}:${GITHUB_SHA}
+      run: |
+        docker login -u ${{ secrets.CLOUD_ACCOUNT_ID }} -p '${{ secrets.REGISTRY_PASSWORD }}' ${IMAGE_URL}
+        docker push ${IMAGE_URL}:${GITHUB_SHA}
 
     - name: Deploy to server
       uses: appleboy/ssh-action@master
